@@ -34,6 +34,7 @@ var colors = {
   "R":"#ff0000"
 }
 
+//enter()
 d3.select('#quotes')
   .style('list-item','none')
 .selectAll("li")
@@ -55,3 +56,16 @@ d3.select('#quotes')
 })
 .style('border-radius',"8px");
 
+//exit - key selector
+//lets say we want to remove list item where rating is R
+
+var nonRQuotes = quotes.filter(function(movie){
+  return movie.rating !== "R";
+});
+
+d3.selectAll('li')
+    .data(nonRQuotes, function(d){
+      return d.quote;
+    })
+    .exit()
+    .remove();
