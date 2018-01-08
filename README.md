@@ -33,3 +33,32 @@ Ans:The first element in the selection is matched with the first piece of data, 
 Q7)What does the second argument in the data function allow you to do?
 
 Ans: It lets you to define a key function to specify how elements & data should be joined together
+
+## General Update Pattern
+1. Grab the update selection make any changes unique to that selection and store the selection in a video
+2. Grab the exit selection and remove any unnecessary elements
+3. Grab the enter selection and make any changes unique to that selection
+4. merge the enter and update selections, and make any changes that you want to be shared across both the selections
+
+eg:
+``` javascript
+var addAll = d3.select('#addAll');
+addAll.on('click', function(){
+  quotes = quotes.concat(newQuotes);
+
+  var listItems = d3.select('#quotes').selectAll('li').data(quotes);
+  listItems
+      .enter()
+      .append('li')
+      .text(d => '"' + d.quote + '" - ' + d.movie + ' (' + d.year + ')')
+      .style("margin", "20px")
+      .style("font-size", d => d.quote.length < 25 ? "2em" : "1em")
+      .style("background-color", d => colors[d.rating])
+      .style("border-radius", "8px")
+      .merge(listItems)
+      .style('color','#0000ff')
+      .style("padding", "10px")
+});
+
+```
+
